@@ -12,21 +12,22 @@
 	const app = useApp();
 	const events = useShapeEvents(id);
 
-	const shape = app.getShapeById(id);
-	const util = shape ? app.getShapeUtil(shape) : null;
+	$: shape = $app.getShapeById(id);
+	$: util = shape ? $app.getShapeUtil(shape) : null;
 
 	let rContainer: HTMLDivElement;
 
-	$: setShapeContainerTransformPosition(rContainer, app);
-	$: setShapeContainerClipPathAndOrColor(rContainer, app);
-	$: setShapeHeightAndWidth(rContainer, app);
+	// TODO: There are more Svelte-y alternatives
+	// to all of these.
+	$: setShapeContainerTransformPosition(rContainer, $app);
+	$: setShapeContainerClipPathAndOrColor(rContainer, $app);
+	$: setShapeHeightAndWidth(rContainer, $app);
 	$: setOpacityOfContainerWhenChanged(rContainer, [opacity, index]);
 
 	const setShapeContainerTransformPosition = (elm: HTMLElement, _tracking: unknown) => {
 		if (!elm) return;
 
-		const shape = app.getShapeById(id);
-		const pageTransform = app.getPageTransformById(id);
+		const pageTransform = $app.getPageTransformById(id);
 
 		if (!shape || !pageTransform) return null;
 
@@ -35,23 +36,21 @@
 	};
 
 	const setShapeContainerClipPathAndOrColor = (elm: HTMLElement, _tracking: unknown) => {
-		const shape = app.getShapeById(id);
 		if (!elm) return;
 		if (!shape) return null;
 
-		const clipPath = app.getClipPathById(id);
+		const clipPath = $app.getClipPathById(id);
 		elm.style.setProperty('clip-path', clipPath ?? 'none');
 		if ('color' in shape.props) {
-			elm.style.setProperty('color', app.getCssColor(shape.props.color));
+			elm.style.setProperty('color', $app.getCssColor(shape.props.color));
 		}
 	};
 
 	const setShapeHeightAndWidth = (elm: HTMLElement, _tracking: unknown) => {
-		const shape = app.getShapeById(id);
 		if (!elm) return;
 		if (!shape) return null;
+		if (!util) return null;
 
-		const util = app.getShapeUtil(shape);
 		const bounds = util.bounds(shape);
 		elm.style.setProperty('width', Math.ceil(bounds.width) + 'px');
 		elm.style.setProperty('height', Math.ceil(bounds.height) + 'px');
@@ -71,11 +70,11 @@
 		class="tl-shape"
 		data-shape-type={shape.type}
 		draggable={false}
-		on:pointerdown={events.onPointerDown}
-		on:pointermove={events.onPointerMove}
-		on:pointerup={events.onPointerUp}
-		on:pointerenter={events.onPointerEnter}
-		on:pointerleave={events.onPointerLeave}
+		on:pointerdown={$events.onPointerDown}
+		on:pointermove={$events.onPointerMove}
+		on:pointerup={$events.onPointerUp}
+		on:pointerenter={$events.onPointerEnter}
+		on:pointerleave={$events.onPointerLeave}
 	>
 		{#if isCulled && util.canUnmount(shape)}
 			{@const bounds = util.bounds(shape)}

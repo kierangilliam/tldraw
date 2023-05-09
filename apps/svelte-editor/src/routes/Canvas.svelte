@@ -6,7 +6,7 @@
 	const app = useApp();
 	const events = useCanvasEvents();
 
-	const { renderingShapes } = app;
+	$: ({ renderingShapes } = $app);
 
 	let rCanvas: HTMLDivElement;
 	let rHtmlLayer: HTMLDivElement;
@@ -17,15 +17,15 @@
 	draggable={false}
 	class="tl-canvas"
 	data-wd="canvas"
-	on:pointerdown={events.onPointerDown}
-	on:pointermove={events.onPointerMove}
-	on:pointerup={events.onPointerUp}
-	on:pointerenter={events.onPointerEnter}
-	on:pointerleave={events.onPointerLeave}
-	on:dragover={events.onDragOver}
-	on:drop={events.onDrop}
-	on:touchstart={events.onTouchStart}
-	on:touchend={events.onTouchEnd}
+	on:pointerdown={$events.onPointerDown}
+	on:pointermove={$events.onPointerMove}
+	on:pointerup={$events.onPointerUp}
+	on:pointerenter={$events.onPointerEnter}
+	on:pointerleave={$events.onPointerLeave}
+	on:dragover={$events.onDragOver}
+	on:drop={$events.onDrop}
+	on:touchstart={$events.onTouchStart}
+	on:touchend={$events.onTouchEnd}
 >
 	<!-- {Background && <Background />}
 	<GridWrapper />

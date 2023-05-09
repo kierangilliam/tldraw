@@ -8,6 +8,7 @@ import {
 	type TLShapeId
 } from '@tldraw/editor';
 import type React from 'react';
+import { derived } from 'svelte/store';
 import { useApp } from './useApp';
 
 const pointerEventHandler = (
@@ -67,42 +68,40 @@ const pointerEventHandler = (
 export function useShapeEvents(id: TLShapeId) {
 	const app = useApp();
 
-	const capturedPointerIdLookup = new Set<string>();
-	function onTouchStart(e: React.TouchEvent) {
-		(e as any).isKilled = true;
-		preventDefault(e);
-	}
+	return derived(app, (app) => {
+		const capturedPointerIdLookup = new Set<string>();
+		function onTouchStart(e: React.TouchEvent) {
+			(e as any).isKilled = true;
+			preventDefault(e);
+		}
 
-	function onTouchEnd(e: React.TouchEvent) {
-		(e as any).isKilled = true;
-		preventDefault(e);
-	}
+		function onTouchEnd(e: React.TouchEvent) {
+			(e as any).isKilled = true;
+			preventDefault(e);
+		}
 
-	const handlePointerMove = pointerEventHandler(app, id, 'pointer_move', capturedPointerIdLookup);
+		const handlePointerMove = pointerEventHandler(app, id, 'pointer_move', capturedPointerIdLookup);
 
-	// Track the last screen point
-	let lastX: number, lastY: number;
+		// Track the last screen point
+		let lastX: number, lastY: number;
 
-	function onPointerMove(e: React.PointerEvent) {
-		if ((e as any).isKilled) return;
-		if (e.clientX === lastX && e.clientY === lastY) return;
-		lastX = e.clientX;
-		lastY = e.clientY;
+		function onPointerMove(e: React.PointerEvent) {
+			if ((e as any).isKilled) return;
+			if (e.clientX === lastX && e.clientY === lastY) return;
+			lastX = e.clientX;
+			lastY = e.clientY;
 
-		return handlePointerMove(e);
-	}
+			return handlePointerMove(e);
+		}
 
-	return {
-		onPointerDown: pointerEventHandler(app, id, 'pointer_down', capturedPointerIdLookup),
-		onPointerUp: pointerEventHandler(app, id, 'pointer_up', capturedPointerIdLookup),
-		onPointerEnter: pointerEventHandler(app, id, 'pointer_enter', capturedPointerIdLookup),
-		onPointerLeave: pointerEventHandler(app, id, 'pointer_leave', capturedPointerIdLookup),
-		onPointerMove,
-		onTouchStart,
-		onTouchEnd
-	};
-
-	// return React.useMemo(() => {
-
-	// }, [app, id]);
+		return {
+			onPointerDown: pointerEventHandler(app, id, 'pointer_down', capturedPointerIdLookup),
+			onPointerUp: pointerEventHandler(app, id, 'pointer_up', capturedPointerIdLookup),
+			onPointerEnter: pointerEventHandler(app, id, 'pointer_enter', capturedPointerIdLookup),
+			onPointerLeave: pointerEventHandler(app, id, 'pointer_leave', capturedPointerIdLookup),
+			onPointerMove,
+			onTouchStart,
+			onTouchEnd
+		};
+	});
 }
