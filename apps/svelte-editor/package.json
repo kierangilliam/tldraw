@@ -13,6 +13,14 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
+	"dependencies": {
+		"@tldraw/editor": "workspace:*",
+		"@tldraw/primitives": "workspace:*",
+		"@tldraw/tlschema": "workspace:*",
+		"@tldraw/tlstore": "workspace:*",
+		"@tldraw/tlvalidate": "workspace:*",
+		"@tldraw/utils": "workspace:*"
+	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
