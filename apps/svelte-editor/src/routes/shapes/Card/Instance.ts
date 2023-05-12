@@ -6,6 +6,7 @@ import {
 	type TLOpacityType
 } from '@tldraw/editor';
 import Card from './Card.svelte';
+import Indicator from './CardIndicator.svelte';
 
 // Shape Type
 // ----------
@@ -62,7 +63,7 @@ export class CardUtil extends TLBoxUtil<CardShape> {
 	// This can only be SVG path data; generally you want the outline of the
 	// component you're rendering.
 	indicator(shape: CardShape) {
-		// return <rect width={shape.props.w} height={shape.props.h} />;
+		return Indicator;
 	}
 }
 
