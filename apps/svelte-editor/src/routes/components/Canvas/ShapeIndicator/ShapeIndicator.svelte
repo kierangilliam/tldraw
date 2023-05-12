@@ -23,7 +23,7 @@
 	}
 </script>
 
-<svg class="tl-svg-origin-container here">
+<svg class="tl-svg-origin-container">
 	<g
 		class="tl-shape-indicator"
 		class:tl-shape-indicator__hinting={isHinting}

@@ -5,7 +5,7 @@
 	import Shape from '../../Shape.svelte';
 	import HandlesWrapper from './Handles/HandlesWrapper.svelte';
 	import SelectionBg from './Selection/SelectionBg.svelte';
-	// import SelectionFg from './Selection/SelectionFg.svelte';
+	import SelectionFg from './Selection/SelectionFg.svelte';
 	import HoveredShapeIndicator from './ShapeIndicator/HoveredShapeIndicator.svelte';
 
 	const app = useApp();
@@ -114,7 +114,7 @@
 			<ZoomBrushWrapper />
 			<SelectedIdIndicators /> -->
 			<HoveredShapeIndicator />
-			<!-- <SelectionFg /> -->
+			<SelectionFg />
 			<!-- <HintedShapeIndicator /> -->
 			<!-- <SnapLinesWrapper /> -->
 			<HandlesWrapper />

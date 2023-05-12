@@ -10,7 +10,7 @@ type TLEvents = {
 	onDrop?: (e: React.DragEvent<Element>) => void;
 };
 
-export function useEvents(node: HTMLElement, events: TLEvents): Actionsv {
+export function useEvents(node: HTMLElement | SVGElement, events?: TLEvents) {
 	function applyEvents(events: TLEvents) {
 		if (events.onPointerDown) node.addEventListener('pointerdown', events.onPointerDown);
 		if (events.onPointerMove) node.addEventListener('pointermove', events.onPointerMove);
@@ -35,18 +35,28 @@ export function useEvents(node: HTMLElement, events: TLEvents): Actionsv {
 		if (events.onTouchEnd) node.removeEventListener('touchend', events.onTouchEnd);
 	}
 
-	applyEvents(events);
+	if (events) {
+		applyEvents(events);
+	}
 
 	let lastEvents = events;
 
 	return {
-		update(events: TLEvents) {
-			removeEvents(events);
-			applyEvents(events);
+		update(events?: TLEvents) {
+			if (lastEvents) {
+				removeEvents(lastEvents);
+			}
+
+			if (events) {
+				applyEvents(events);
+			}
+
 			lastEvents = events;
 		},
 		destroy() {
-			removeEvents(lastEvents);
+			if (lastEvents) {
+				removeEvents(lastEvents);
+			}
 		}
 	};
 }
