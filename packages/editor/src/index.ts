@@ -172,12 +172,12 @@ export {
 	WAY_TOO_BIG_ARROW_BEND_FACTOR,
 	ZOOMS,
 } from './lib/constants'
-export { createHandleEvents } from './lib/events/createHandleEvents'
 export { normalizeWheel } from './lib/hooks/shared'
 export { useApp } from './lib/hooks/useApp'
 export { useContainer } from './lib/hooks/useContainer'
 export { getCursor } from './lib/hooks/useCursor'
 export type { TLEditorComponents } from './lib/hooks/useEditorComponents'
+export { createHandleEvents } from './lib/hooks/useHandleEvents'
 export { usePeerIds } from './lib/hooks/usePeerIds'
 export { usePresence } from './lib/hooks/usePresence'
 export { useQuickReactor } from './lib/hooks/useQuickReactor'
