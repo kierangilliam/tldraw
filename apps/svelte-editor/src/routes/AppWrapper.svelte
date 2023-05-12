@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import Canvas from './Canvas.svelte';
+	import Canvas from './components/Canvas/Canvas.svelte';
 	import { App, createShapeId, TldrawEditorConfig, type TLStore } from '@tldraw/editor';
 	import { writable } from 'svelte/store';
 
@@ -18,7 +18,6 @@
 
 	setContext('app', appStore);
 
-	console.log({ app, config });
 	app.createShapes([
 		{
 			id: createShapeId(),
@@ -30,6 +29,15 @@
 
 	store.listen((listener) => {
 		$appStore = app;
+
+		// if (
+		// 	Object.keys(listener.changes.updated).length == 1 &&
+		// 	Object.keys(listener.changes.updated)[0].includes('user_presence')
+		// ) {
+		// 	return;
+		// }
+
+		// console.log('listener.changes', listener.changes);
 	});
 </script>
 
