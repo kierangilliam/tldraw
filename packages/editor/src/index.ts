@@ -172,6 +172,7 @@ export {
 	WAY_TOO_BIG_ARROW_BEND_FACTOR,
 	ZOOMS,
 } from './lib/constants'
+export { createHandleEvents } from './lib/events/createHandleEvents'
 export { normalizeWheel } from './lib/hooks/shared'
 export { useApp } from './lib/hooks/useApp'
 export { useContainer } from './lib/hooks/useContainer'
