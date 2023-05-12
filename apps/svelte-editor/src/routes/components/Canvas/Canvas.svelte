@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { useApp } from '../../hooks/useApp';
 	import { useCanvasEvents } from '../../hooks/useCanvasEvents';
+	import { useEvents } from '../../hooks/useEvents';
 	import Shape from '../../Shape.svelte';
 	import HandlesWrapper from './Handles/HandlesWrapper.svelte';
-	import SelectionBg from './SelectionBg.svelte';
-	import SelectionFg from './SelectionFg.svelte';
+	import SelectionBg from './Selection/SelectionBg.svelte';
+	// import SelectionFg from './Selection/SelectionFg.svelte';
 	import HoveredShapeIndicator from './ShapeIndicator/HoveredShapeIndicator.svelte';
 
 	const app = useApp();
@@ -83,15 +84,7 @@
 	draggable={false}
 	class="tl-canvas"
 	data-wd="canvas"
-	on:pointerdown={$events.onPointerDown}
-	on:pointermove={$events.onPointerMove}
-	on:pointerup={$events.onPointerUp}
-	on:pointerenter={$events.onPointerEnter}
-	on:pointerleave={$events.onPointerLeave}
-	on:dragover={$events.onDragOver}
-	on:drop={$events.onDrop}
-	on:touchstart={$events.onTouchStart}
-	on:touchend={$events.onTouchEnd}
+	use:useEvents={$events}
 >
 	<!-- {Background && <Background />}
 	<GridWrapper />
